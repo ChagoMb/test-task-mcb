@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeName("car")
-public class CarDto implements Collateral {
+@JsonTypeName("airplane")
+public class AirplaneDto implements Collateral {
     private Long id;
     private String brand;
     private String model;

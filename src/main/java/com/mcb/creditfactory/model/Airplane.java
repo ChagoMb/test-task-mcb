@@ -1,6 +1,6 @@
 package com.mcb.creditfactory.model;
 
-import com.mcb.creditfactory.model.assessment.CarAssessment;
+import com.mcb.creditfactory.model.assessment.AirplaneAssessment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,17 +13,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "CAR")
-public class Car {
+@Table(name = "AIRPLANE")
+@AllArgsConstructor
+@NoArgsConstructor
+public class Airplane {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String brand;
     private String model;
     private Double power;
@@ -31,10 +34,10 @@ public class Car {
     @Column(name = "year_of_issue")
     private Short year;
 
-    @OneToMany(mappedBy = "car", fetch = FetchType.EAGER)
-    private List<CarAssessment> assessments;
+    @OneToMany(mappedBy = "airplane", fetch = FetchType.EAGER)
+    private List<AirplaneAssessment> assessments;
 
-    public Car(Long id, String brand, String model, Double power, Short year) {
+    public Airplane(Long id, String brand, String model, Double power, Short year) {
         this.id = id;
         this.brand = brand;
         this.model = model;

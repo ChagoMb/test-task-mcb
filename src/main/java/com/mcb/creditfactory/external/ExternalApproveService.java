@@ -16,31 +16,30 @@ public class ExternalApproveService {
     private static final int MIN_PLANE_YEAR = 1991;
     private static final BigDecimal MIN_PLANE_VALUE = BigDecimal.valueOf(230000000);
 
-
     public int approve(CollateralObject object) {
-        if (object.getDate() == null ||object.getYear() == null || object.getValue() == null || object.getType() == null) {
+        if (object.getYear() == null || object.getType() == null) {
             return -1;
         }
 
         int code;
         switch (object.getType()) {
-            case CAR: code = approveCar(object); break;
-            case AIRPLANE: code = approvePlane(object); break;
-            default: code = -100;
+            case CAR:
+                code = approveCar(object);
+                break;
+            case AIRPLANE:
+                code = approvePlane(object);
+                break;
+            default:
+                code = -100;
         }
 
         return code;
     }
 
     private int approveCar(CollateralObject object) {
+
         if (object.getYear() < MIN_CAR_YEAR) {
             return -10;
-        }
-        if (object.getDate().isBefore(MIN_ASSESS_DATE)) {
-            return -11;
-        }
-        if (object.getValue().compareTo(MIN_CAR_VALUE) < 0) {
-            return -12;
         }
 
         return 0;
@@ -50,13 +49,32 @@ public class ExternalApproveService {
         if (object.getYear() < MIN_PLANE_YEAR) {
             return -20;
         }
+        return 0;
+    }
+
+    public int approveCarAssessment(CollateralAssessmentObject object) {
+        if (object.getDate() == null || object.getValue() == null) {
+            return -1;
+        }
+        if (object.getDate().isBefore(MIN_ASSESS_DATE)) {
+            return -11;
+        }
+        if (object.getValue().compareTo(MIN_CAR_VALUE) < 0) {
+            return -12;
+        }
+        return 0;
+    }
+
+    public int approveAirplaneAssessment(CollateralAssessmentObject object) {
+        if (object.getDate() == null || object.getValue() == null) {
+            return -2;
+        }
         if (object.getDate().isBefore(MIN_ASSESS_DATE)) {
             return -21;
         }
         if (object.getValue().compareTo(MIN_PLANE_VALUE) < 0) {
             return -22;
         }
-
         return 0;
     }
 }
